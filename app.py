@@ -74,10 +74,11 @@ def upload_to_dropbox(file_path):
     try:
         # Aprire il file e caricarlo su Dropbox
         with open(file_path, "rb") as file:
-            # Carica il file su Dropbox (ad esempio, nella cartella 'uploads')
-            dropbox_path = f"/{file_path}"  # Il file sarà caricato con lo stesso nome
+            dropbox_path = f"/Uploads/{file_path}"  # Modifica per usare la cartella 'Uploads'
             dbx.files_upload(file.read(), dropbox_path, mute=True)
             print(f"File {file_path} caricato su Dropbox!")
+    except dropbox.exceptions.ApiError as e:
+        print(f"Errore API Dropbox: {e}")
     except Exception as e:
         print(f"Errore durante il caricamento su Dropbox: {e}")
 
