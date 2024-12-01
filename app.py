@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, send_from_directory
 from openpyxl import Workbook, load_workbook
 import os
@@ -6,18 +5,32 @@ import dropbox
 
 app = Flask(__name__)
 
+# Access Token di Dropbox (inserisci il tuo token qui)
+DROPBOX_ACCESS_TOKEN = 'sl.CBwlaIugRUpVnh_mTAIqLNuii95RmSAwECy623bPfCUtuDyEDfNwe-QOJldhY63546YDFkeKsl-qUAFRFDkfhnj3cmmD7mG3Ij2iIWjiQhwKxuXAhdRleK4p0yXRlXBsSMOwbJye7AFW'
+
+# Test dell'accesso a Dropbox
+def test_dropbox_access():
+    try:
+        # Creazione di una connessione con Dropbox
+        dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
+        # Prova a ottenere informazioni sull'account
+        account_info = dbx.users_get_current_account()
+        print(f"Accesso a Dropbox riuscito! Account: {account_info.name.display_name}")
+    except dropbox.exceptions.AuthError as e:
+        print(f"Errore di autenticazione: {e}")
+
+# Esegui il test di accesso a Dropbox
+test_dropbox_access()
+
 # Percorso del file Excel
 EXCEL_FILE = "7tmp7adesioni.xlsx"
 
-# Access Token di Dropbox (copia l'access token ottenuto dal tuo account Dropbox)
-DROPBOX_ACCESS_TOKEN = 'sl.CBwlaIugRUpVnh_mTAIqLNuii95RmSAwECy623bPfCUtuDyEDfNwe-QOJldhY63546YDFkeKsl-qUAFRFDkfhnj3cmmD7mG3Ij2iIWjiQhwKxuXAhdRleK4p0yXRlXBsSMOwbJye7AFW#' 
 # Creazione iniziale del file Excel se non esiste
 if not os.path.exists(EXCEL_FILE):
     print("Creazione del file Excel...")
     workbook = Workbook()
     sheet = workbook.active
     sheet.title = "Adesioni"
-    # Intestazioni del file Excel
     sheet.append(["Cognome", "Nome", "Data di Nascita", "Luogo di Nascita", "Codice Fiscale", "Email", "Cellulare"])
     workbook.save(EXCEL_FILE)
     print("File Excel creato!")
@@ -73,15 +86,12 @@ def upload_to_dropbox(file_path):
     try:
         # Aprire il file e caricarlo su Dropbox
         with open(file_path, "rb") as file:
-            dropbox_path = f"/Uploads/{file_path}"  # Modifica per usare la cartella 'Uploads'
+            dropbox_path = f"/cartella_destinazione/{os.path.basename(file_path)}"  # Modifica qui se necessario
             dbx.files_upload(file.read(), dropbox_path, mute=True)
             print(f"File {file_path} caricato su Dropbox!")
-    except dropbox.exceptions.ApiError as e:
-        print(f"Errore API Dropbox: {e}")
     except Exception as e:
         print(f"Errore durante il caricamento su Dropbox: {e}")
 
-# Endpoint per il download del file Excel
 @app.route('/download', methods=['GET'])
 def download_file():
     # Invia il file Excel dal server al client
