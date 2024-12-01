@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raccolta Adesioni</title>
+
+  <!-- Collegamento a Google Fonts per HK Grotesk -->
+  <link href="https://fonts.googleapis.com/css2?family=HK+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Stile Generale della Pagina */
+    body {
+      font-family: 'HK Grotesk', sans-serif;
+      margin: 20px;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .logo {
+      max-width: 150px;
+      margin: 0 auto 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo del Circolo -->
+    <img src="static/images/logo.png" alt="Logo del Circolo" class="logo">
+    <h1>Circolo A.S.D. La Grangia</h1>
+    <h1>Modulo di Adesione Soci</h1>
+
+    <!-- Correzione del form -->
+    <form method="POST" action="/submit">
+      <label for="surname">Cognome</label>
+      <input type="text" id="surname" name="surname" required>
+
+      <label for="name">Nome</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="birthdate">Data di Nascita</label>
+      <input type="date" id="birthdate" name="birthdate" required>
+
+      <label for="birthplace">Luogo di Nascita</label>
+      <input type="text" id="birthplace" name="birthplace" required>
+
+      <label for="fiscalcode">Codice Fiscale</label>
+      <input type="text" id="fiscalcode" name="fiscalcode" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Cellulare</label>
+      <div style="display: flex; align-items: center;">
+        <span style="margin-right: 5px;">+39</span>
+        <input type="tel" id="phone" name="phone" pattern="\d{9,10}" placeholder="Inserisci il numero senza prefisso" required style="flex: 1;">
+      </div>
+
+      <!-- Campi obbligatori da fleggare -->
+      <div>
+        <label>
+          <input type="checkbox" name="privacy" required>
+          Dichiaro di essere consapevole che ogni anno si svolgerà l'assemblea dei soci nel mese di marzo e mi impegno a contattare il Circolo per avere indicazioni della data di svolgimento.
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="privacy" required>
+          Acconsento al trattamento dei dati personali ai sensi del D.Lgs. 196/2003 e del GDPR (Regolamento UE 2016/679).
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="authorization" required>
+          Dichiaro di aver preso visione delle condizioni di adesione e di accettarle integralmente.
+        </label>
+      </div>
+
+      <!-- Pulsante Invio -->
+      <button type="submit">Invia</button>
+    </form>
+  </div>
+</body>
+</html>
