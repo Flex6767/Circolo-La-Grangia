@@ -10,7 +10,7 @@ app = Flask(__name__)
 EXCEL_FILE = "7tmp7adesioni.xlsx"
 
 # Access Token di Dropbox (copia l'access token ottenuto dal tuo account Dropbox)
-sl.CBwlaIugRUpVnh_mTAIqLNuii95RmSAwECy623bPfCUtuDyEDfNwe-QOJldhY63546YDFkeKsl-qUAFRFDkfhnj3cmmD7mG3Ij2iIWjiQhwKxuXAhdRleK4p0yXRlXBsSMOwbJye7AFW = 'your_dropbox_access_token'
+DROPBOX_ACCESS_TOKEN = 'sl.CBwlaIugRUpVnh_mTAIqLNuii95RmSAwECy623bPfCUtuDyEDfNwe-QOJldhY63546YDFkeKsl-qUAFRFDkfhnj3cmmD7mG3Ij2iIWjiQhwKxuXAhdRleK4p0yXRlXBsSMOwbJye7AFW'
 
 # Creazione iniziale del file Excel se non esiste
 if not os.path.exists(EXCEL_FILE):
