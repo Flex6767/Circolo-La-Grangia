@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+
+from flask import Flask, render_template, request, send_from_directory
 from openpyxl import Workbook, load_workbook
 import os
 
@@ -58,31 +59,11 @@ def submit():
 
     return "Iscrizione completata con successo!"
 
-
-    # Debug: Stampa i dati ricevuti
-    print("Dati ricevuti dal modulo:")
-    print(f"Cognome: {cognome}, Nome: {nome}, Data di Nascita: {data_nascita}, Luogo di Nascita: {luogo_nascita}")
-    print(f"Codice Fiscale: {codice_fiscale}, Email: {email}, Cellulare: {cellulare}")
-
-    # Verifica che i dati non siano vuoti
-    if not all([cognome, nome, data_nascita, luogo_nascita, codice_fiscale, email, cellulare]):
-        print("Errore: Dati mancanti!")
-        return "Errore: Tutti i campi sono obbligatori."
-
-    try:
-        # Aprire il file Excel e aggiungere i dati
-        print("Apertura del file Excel...")
-        workbook = load_workbook(EXCEL_FILE)
-        sheet = workbook.active
-        sheet.append([cognome, nome, data_nascita, luogo_nascita, codice_fiscale, email, cellulare])
-        workbook.save(EXCEL_FILE)
-        print("Dati salvati con successo!")
-
-    except Exception as e:
-        print(f"Errore durante il salvataggio: {e}")
-        return f"Errore durante il salvataggio: {e}"
-
-    return "Iscrizione completata con successo!"
+# Endpoint per il download del file Excel
+@app.route('/download', methods=['GET'])
+def download_file():
+    # Invia il file Excel dal server al client
+    return send_from_directory(directory=os.getcwd(), filename=EXCEL_FILE)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), debug=True)
